@@ -1,0 +1,15 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem auto;
+    width: 80%;
+    max-width: 800px;
+    min-height: 80svh;
+    border: 1px solid white;
+    border-radius: 1rem;
+}
+
+.chat-container h2 {
+    margin: 1rem auto 2rem;
+}
