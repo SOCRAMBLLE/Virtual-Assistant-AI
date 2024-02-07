@@ -1,0 +1,13 @@
+# Arquivos gerados pelo compilador Rust
+/target/
+
+# Arquivos de dependências
+Cargo.lock
+
+# Arquivos de compilação
+*.rs.bk
+
+# Arquivos de IDEs
+.idea/
+.vscode/
+*.iml
