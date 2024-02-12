@@ -6,5 +6,66 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-warp = "0.3.6"
-tokio = { version = "1.36.0", features = ["full"] }
+actix-web = "4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+sqlx = { version = "0.5", features = ["runtime-actix-native-tls", "postgres"] }
+dotenv = "0.15"
+reqwest = { version = "0.11", features = ["json"] }
+chrono = "0.4"
+
+# # Variáveis de ambiente
+
+
+# [dependencies]
+# # Framework web para criar aplicações web com Rust
+# actix-web = "4"
+# actix-rt = "2.5"
+
+# # Serialização e desserialização de estruturas de dados, útil para trabalhar com JSON
+# serde = { version = "1.0", features = ["derive"] }
+# serde_json = "1.0"
+
+# # Variáveis de ambiente
+# dotenv = "0.15"
+
+# # Cliente assíncrono para fazer requisições HTTP, útil para a integração com a API da OpenAI e Google OAuth
+# reqwest = { version = "0.11", features = ["json"] }
+
+# # Cliente OAuth2 para Rust, para autenticação com a Google
+# # oauth2 = { version = "4.4.2", default-features = false, features = [
+# #     "reqwest-async",
+# #     "pkce",
+# # ] }
+
+# # Biblioteca assíncrona do Rust, usada frequentemente com Actix-web e reqwest
+# tokio = { version = "1", features = ["full"] }
+
+# # CORS para Actix-web, para permitir comunicação entre domínios diferentes (se o seu frontend estiver hospedado separadamente)
+# actix-cors = "0.7.0"
+
+# # Para lidar com JSON Web Tokens (JWT) na autenticação
+# jsonwebtoken = "9.2.0"
+
+# # Para trabalhar com bancos de dados; escolha a crate conforme a sua escolha de banco de dados
+# # Para SQL (PostgreSQL, MySQL, SQLite)
+# diesel = { version = "2.1.4", features = ["postgres", "chrono"] }
+# # Ou, se você estiver usando uma solução baseada na Vercel ou uma API para banco de dados, talvez você não precise de uma crate de banco de dados diretamente.
+# mysql = "24.0.0"
+# mysql_common = "0.30.6"
+
+# # Para gerar e verificar PKCE codes para OAuth2
+# pkce = "0.2.0"
+
+# # Utilitário para trabalhar com datas e horas
+# chrono = "0.4"
+# oauth2 = "4.4.2"
+
+
+# #############
+# deadpool-postgres = "0.12.1"
+# tokio-postgres = { version = "0.7", features = [
+#     "with-serde_json-1",
+#     "with-uuid-0_8",
+# ] }
+# openidconnect = "3.2.0"

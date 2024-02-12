@@ -1,0 +1,11 @@
+{
+    "cargo.automaticCheck": false,
+    "rust-analyzer.linkedProjects": [
+        ".\\backend\\Cargo.toml"
+    ],
+    "rust-analyzer.showUnlinkedFileNotification": false,
+    "cSpell.words": [
+        "actix",
+        "openidconnect"
+    ]
+}
