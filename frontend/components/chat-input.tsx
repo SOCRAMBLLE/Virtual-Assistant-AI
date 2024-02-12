@@ -3,15 +3,17 @@
 import React, { useState } from "react";
 import "./chat.css";
 
+interface ChatProps {
+  onSubmit: (event: React.FormEvent<HTMLFormElement> ) => void;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
+}
 
-export const ChatInput = () => {
-  const [message, setMessage] = useState("");
+export const ChatInput: React.FC<ChatProps> = ( { onSubmit, setMessage } ) => {
   const [textareaHeight, setTextareaHeight] = useState("auto");
-
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setMessage(event.target.value);
+    setMessage(event.target.value)
     const textarea = event.target;
     textarea.style.height = "0";
     const newHeight = textarea.scrollHeight;
@@ -25,36 +27,14 @@ export const ChatInput = () => {
     }
   };
 
-  const handleInputSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      const response = await fetch('/api/chat', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
-      });
-      if (!response.ok) {
-        throw new Error(`Failed to fetch, status: ${response.status}`);
-      }
-      const data = await response.text();
-      console.log("Mensagem enviada:", message);
-      console.log("Resposta:", data);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  
-  };
-
   return (
-    <form className="input-container" onSubmit={handleInputSubmit}>
+    <form className="input-container" onSubmit={onSubmit}>
       <textarea
         onChange={handleTextareaChange}
         rows={1}
         cols={50}
         style={{ height: textareaHeight }}
-        value={message}
+        // value={message}
       />
       <button type="submit">Send</button>
     </form>

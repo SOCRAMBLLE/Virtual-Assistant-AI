@@ -23,7 +23,8 @@ export async function POST(req: Request) {
 
   const data = await apiResponse.json();
   const completion = data.data.content.trim()
-  console.log(completion)
+  // console.log('mensagem enviada route:', messageText)
+  // console.log('resposta route:',completion)
   
   return new Response(completion, {
     headers: {
