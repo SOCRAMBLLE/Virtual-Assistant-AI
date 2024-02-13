@@ -3,14 +3,36 @@
 import "./home.css";
 import { Button } from "@/components/ui/button";
 import {useRouter} from 'next/navigation' 
+import { useState } from "react";
 
 
 export default function Home() {
   const router = useRouter();
-  const handleClick = () => {
-    // let path = 'https://google.pt'
-    // redirect(path)
-    router.push('/ai')
+  const [postResponse, setPostResponse] = useState("")
+
+  const handleClick = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      const data = await response.text();
+      console.log(data)
+      setPostResponse(data+ ' Please wait...');
+
+      setTimeout(() => {
+        router.push('/ai');
+      }, 5000)
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setPostResponse('Login not successful')
+    }
   }
 
   return (
@@ -19,6 +41,7 @@ export default function Home() {
       <div className="login-container">
         <h3 className="loginTitle">Please Login</h3>
         <Button onClick={handleClick}>Login</Button>
+        <p className="post-response">{postResponse}</p>
       </div>
     </>
   );

@@ -10,3 +10,7 @@
     justify-content: center;
     gap: 2rem;
 }
+
+.login-container .post-response {
+    font-size: 0.7rem;
+}
