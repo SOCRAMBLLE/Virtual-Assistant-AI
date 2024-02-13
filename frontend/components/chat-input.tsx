@@ -58,8 +58,9 @@ export const ChatInput: React.FC<ChatProps> = ({ onSubmit, setMessage, message }
   };
 
   return (
-    <form className="input-container" onSubmit={onSubmit} ref={myFormRef}>
+    <form className="input-container" onSubmit={(e) => !isMessageEmpty && onSubmit(e)} ref={myFormRef}>
       <textarea
+        placeholder="Type a message..."
         onChange={handleTextareaChange}
         rows={1}
         cols={50}
@@ -67,7 +68,7 @@ export const ChatInput: React.FC<ChatProps> = ({ onSubmit, setMessage, message }
         value={message}
         onKeyDown={pressEnter}
       />
-      <Button type="submit"><IoMdSend /></Button>
+      <Button type="submit" className={isMessageEmpty ? "inactive": ""}><IoMdSend /></Button>
     </form>
   );
 };
