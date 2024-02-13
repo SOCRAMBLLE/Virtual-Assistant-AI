@@ -6,8 +6,8 @@
   margin: 2rem auto;
   width: 90%;
   max-width: 800px;
-  min-height: 91svh;
-  /* border: 1px solid white; */
+  height: 91svh;
+  gap: 1rem;
   border-radius: 1rem;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .input-container {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   width: 100%;
   border-radius: 1rem;
@@ -62,18 +62,18 @@
 
 .input-container button {
   margin-left: 3px;
-  width: 3rem;
-  height: 2rem;
+  padding: 0.3rem 0.8rem;
 }
 
 .chat-messages-container {
   position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 2rem;
-  height: 80% !important; 
   width: 100%;
-  overflow-y: hidden;
+  overflow-y: auto;
+  padding-bottom: 1.2rem;
 }
 
 .chat-messages-container .message-container {
@@ -101,4 +101,21 @@
 
 .message-subcontainer .message-content {
   font-size: 0.9rem;
+}
+
+.chat-messages-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat-messages-container::-webkit-scrollbar-track {
+  border-radius: 1rem;
+}
+
+.chat-messages-container::-webkit-scrollbar-thumb {
+  background: darkslategray;
+  border-radius: 11rem;
+}
+
+.chat-messages-container::-webkit-scrollbar-thumb:hover {
+  background: #b0a695;
 }

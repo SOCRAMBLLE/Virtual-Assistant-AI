@@ -1,19 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./chat.css";
+import { Button } from "./ui/button";
+import { IoMdSend } from "react-icons/io";
 
 interface ChatProps {
-  onSubmit: (event: React.FormEvent<HTMLFormElement> ) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
+  message?: string;  
 }
 
-export const ChatInput: React.FC<ChatProps> = ( { onSubmit, setMessage } ) => {
+export const ChatInput: React.FC<ChatProps> = ({ onSubmit, setMessage, message }) => {
   const [textareaHeight, setTextareaHeight] = useState("auto");
+  const [isMessageEmpty, setIsMessageEmpty] = useState(true);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const myFormRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    setIsMessageEmpty(!message);
+  }, [message]);
+
+  useEffect(() => {
+    const onTouchStart = () => setIsTouchDevice(true);
+    window.addEventListener("touchstart", onTouchStart);
+
+    return () => window.removeEventListener("touchstart", onTouchStart);
+  }, []);
+
+  const pressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey && !isTouchDevice) {
+      e.preventDefault();
+      if (!isMessageEmpty) {
+        myFormRef.current?.requestSubmit();
+      }
+    }
+  };
+
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setMessage(event.target.value)
+    message = event.target.value
+    setMessage(message);
     const textarea = event.target;
     textarea.style.height = "0";
     const newHeight = textarea.scrollHeight;
@@ -25,18 +53,21 @@ export const ChatInput: React.FC<ChatProps> = ( { onSubmit, setMessage } ) => {
       textarea.style.height = `${newHeight}px`;
       setTextareaHeight(`${newHeight}px`);
     }
+
+    
   };
 
   return (
-    <form className="input-container" onSubmit={onSubmit}>
+    <form className="input-container" onSubmit={onSubmit} ref={myFormRef}>
       <textarea
         onChange={handleTextareaChange}
         rows={1}
         cols={50}
         style={{ height: textareaHeight }}
-        // value={message}
+        value={message}
+        onKeyDown={pressEnter}
       />
-      <button type="submit">Send</button>
+      <Button type="submit"><IoMdSend /></Button>
     </form>
   );
 };
