@@ -56,3 +56,18 @@ async fn login_callback(query: web::Query<OAuthCallbackParams>) -> impl Responde
         Err(_) => HttpResponse::InternalServerError().body("Failed to exchange code for token."),
     }
 }
+
+// async fn get_user_info(
+//     access_token: &str,
+// ) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
+//     let client = reqwest::Client::new();
+//     let user_info_response = client
+//         .get("https://www.googleapis.com/oauth2/v2/userinfo")
+//         .bearer_auth(access_token)
+//         .send()
+//         .await?
+//         .json::<serde_json::Value>()
+//         .await?;
+
+//     Ok(user_info_response)
+// }
