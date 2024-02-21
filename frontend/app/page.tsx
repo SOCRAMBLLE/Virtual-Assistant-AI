@@ -1,39 +1,34 @@
-'use client'
+"use client";
 
 import "./home.css";
 import { Button } from "@/components/ui/button";
-import {useRouter} from 'next/navigation' 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-
 
 export default function Home() {
   const router = useRouter();
-  const [postResponse, setPostResponse] = useState("")
+  const [postResponse, setPostResponse] = useState("");
 
   const handleClick = async () => {
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8080/auth/google", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-        }
+          "Content-Type": "application/json",
+        },
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const data = await response.text();
-      console.log(data)
-      setPostResponse(data+ ' Please wait...');
+      const data = await response.body;
 
-      setTimeout(() => {
-        router.push('/ai');
-      }, 5000)
+      return data;
     } catch (error) {
-      console.error('Fetch error:', error);
-      setPostResponse('Login not successful')
+      console.error("Fetch error:", error);
+      setPostResponse("Login not successful");
     }
-  }
+  };
 
   return (
     <>
