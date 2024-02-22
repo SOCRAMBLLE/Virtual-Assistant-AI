@@ -21,7 +21,7 @@ export const Chat = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userMessage }),
+        body: JSON.stringify({ message: userMessage }),
       });
       if (!response.ok) {
         throw new Error(`Failed to fetch, status: ${response.status}`);

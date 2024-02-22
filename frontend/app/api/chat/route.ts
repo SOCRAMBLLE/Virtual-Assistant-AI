@@ -5,8 +5,10 @@ export async function POST(req: Request) {
   const { message } = json;
   const messageText = JSON.stringify(message);
   const payload = {
-    text: messageText,
+    text: message,
   };
+
+  console.log("payload enviado:", messageText);
 
   const apiResponse = await fetch("http://127.0.0.1:8080/api/chat", {
     method: "POST",
