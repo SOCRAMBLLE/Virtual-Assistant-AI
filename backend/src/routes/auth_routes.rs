@@ -1,4 +1,5 @@
-use actix_web::{web, HttpResponse, Responder};
+use actix_identity::Identity;
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use dotenv::dotenv;
 use reqwest::Client;
 use serde::Deserialize;
@@ -13,6 +14,8 @@ pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.route("/auth/login", web::get().to(login));
     cfg.route("/auth/google", web::get().to(google_login));
     cfg.route("/auth/google/callback", web::get().to(login_callback));
+    cfg.service(web::resource("/dashboard").route(web::get().to(protected_dashboard)));
+    cfg.service(web::resource("/tasks").route(web::get().to(protected_tasks)));
 }
 
 async fn login() -> impl Responder {
@@ -51,10 +54,39 @@ async fn login_callback(query: web::Query<OAuthCallbackParams>) -> impl Responde
     match res {
         Ok(response) => {
             let token_res: serde_json::Value = response.json().await.unwrap();
-            HttpResponse::Ok().json(token_res)
+            let access_token = token_res["access_token"].as_str().unwrap_or_default();
+            // Substitua YOUR_FRONTEND_URL pela URL do seu frontend.
+            let frontend_redirect_uri = format!("http://localhost:3000/?token={}", access_token);
+            HttpResponse::TemporaryRedirect()
+                .header("Location", frontend_redirect_uri)
+                .finish()
         }
         Err(_) => HttpResponse::InternalServerError().body("Failed to exchange code for token."),
     }
+}
+
+async fn protected_dashboard(id: Identity, req: HttpRequest) -> impl Responder {
+    if id.id().is_ok() {
+        // Se o usuário não estiver autenticado, redireciona para a página de login
+        return HttpResponse::TemporaryRedirect()
+            .header("Location", "/auth/login")
+            .finish();
+    }
+
+    // Se o usuário estiver autenticado, permite o acesso à página de dashboard
+    HttpResponse::Ok().body("Dashboard Page")
+}
+
+async fn protected_tasks(id: Identity, req: HttpRequest) -> impl Responder {
+    if id.id().is_ok() {
+        // Se o usuário não estiver autenticado, redireciona para a página de login
+        return HttpResponse::TemporaryRedirect()
+            .header("Location", "/auth/login")
+            .finish();
+    }
+
+    // Se o usuário estiver autenticado, permite o acesso à página de tarefas
+    HttpResponse::Ok().body("Tasks Page")
 }
 
 // async fn get_user_info(
