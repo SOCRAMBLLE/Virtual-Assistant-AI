@@ -7,27 +7,9 @@ import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const [postResponse, setPostResponse] = useState("");
 
-  const handleClick = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/auth/google", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.body;
-
-      return data;
-    } catch (error) {
-      console.error("Fetch error:", error);
-      setPostResponse("Login not successful");
-    }
+  const handleClick = () => {
+    window.location.href = "http://127.0.0.1:8080/auth/google";
   };
 
   return (
@@ -36,7 +18,6 @@ export default function Home() {
       <div className="login-container">
         <h3 className="loginTitle">Please Login</h3>
         <Button onClick={handleClick}>Login</Button>
-        <p className="post-response">{postResponse}</p>
       </div>
     </>
   );
