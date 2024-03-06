@@ -3,13 +3,14 @@
 export async function POST(req: Request) {
   const json = await req.json();
   const { message } = json;
-  const messageText = JSON.stringify(message)
+  const messageText = JSON.stringify(message);
   const payload = {
-    role: "user",
-    content: messageText,
+    text: message,
   };
-  
-    const apiResponse = await fetch("https://backend-virtual-ai.onrender.com/api/chat", {
+
+  console.log("payload enviado:", messageText);
+
+  const apiResponse = await fetch("http://127.0.0.1:8080/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,17 +19,20 @@ export async function POST(req: Request) {
   });
 
   if (!apiResponse.ok) {
-    return new Response('HTTP error! Status:', { status: apiResponse.status } );
+    const errorResponse = await apiResponse.text(); // ou `apiResponse.json()` dependendo do seu backend
+    console.error("Erro na API:", errorResponse);
+    throw new Error(`HTTP error! Status: ${apiResponse.status}`);
   }
 
   const data = await apiResponse.json();
-  const completion = data.data.content.trim()
+  // console.log("Resposta:", data.choices[0].message.content);
+  const completion = data.choices[0].message.content;
   // console.log('mensagem enviada route:', messageText)
   // console.log('resposta route:',completion)
-  
+
   return new Response(completion, {
     headers: {
-      'Content-Type': 'text/plain'
-    }
-  })
+      "Content-Type": "text/plain",
+    },
+  });
 }

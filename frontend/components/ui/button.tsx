@@ -1,4 +1,4 @@
-import "./button.css"
+import "./button.css";
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -7,6 +7,15 @@ interface ButtonProps {
   className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ className, type, children, onClick }) => {
-  return <button type={type} onClick={onClick} className={`ui-button ${className}`}>{children}</button>;
+export const Button: React.FC<ButtonProps> = ({
+  className,
+  type,
+  children,
+  onClick,
+}) => {
+  return (
+    <button type={type} onClick={onClick} className={`ui-button ${className}`}>
+      {children}
+    </button>
+  );
 };
