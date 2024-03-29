@@ -5,15 +5,21 @@ import { useEffect } from "react";
 import "./logout-button.css";
 
 const LogoutBtn = () => {
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-  };
+  // const router = useRouter();
 
-  return (
-    <Button onClick={handleLogout} className="logout-btn">
-      Logout
-    </Button>
-  );
+  // useEffect(() => {
+  //   const accessToken = localStorage.getItem("accessToken");
+  //   if (!accessToken) {
+  //     router.push("/");
+  //   }
+  // }, [router]);
+
+  // const handleLogout = () => {
+  //   localStorage.removeItem("accessToken");
+  //   router.push("/");
+  // };
+
+  return <Button>Logout</Button>;
 };
 
 export default LogoutBtn;
