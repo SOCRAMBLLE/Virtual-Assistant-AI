@@ -1,4 +1,6 @@
 use actix_cors::Cors;
+use actix_identity::IdentityMiddleware;
+
 use actix_web::{http::header, middleware, web, App, HttpServer};
 use dotenv::dotenv;
 use std::env; // Adicionado para leitura da variável de ambiente
@@ -40,6 +42,7 @@ async fn main() -> io::Result<()> {
             //         .max_age(3600),
             // )
             .wrap(Cors::permissive()) // Configuração CORS permissiva
+            .wrap(IdentityMiddleware::default())
             .data(database_service.clone()) // Torna o serviço de banco de dados disponível para os handlers
             .data(openai_service.clone()) // Disponibiliza o serviço OpenAIService para a aplicação
             // Configuração das rotas
@@ -47,12 +50,13 @@ async fn main() -> io::Result<()> {
             .configure(routes::event_routes::config) // Rotas de eventos
             .configure(routes::task_routes::config) // Rotas de tarefas
             .configure(routes::chat_routes::config) // Chat
-                                                    // Rotas de eventos
-                                                    // Configure mais rotas conforme necessário
-                                                    // Inclua mais configurações conforme necessário, por exemplo:
-                                                    // .configure(routes::task_routes::config) // Se você tiver rotas para tarefas
-                                                    // Inicialização e configuração de serviços podem ser feitas aqui
-                                                    // Por exemplo, passar o pool de conexões do banco de dados para os handlers
+            .configure(routes::calendar_routes::config) // calendario
+                                                        // Rotas de eventos
+                                                        // Configure mais rotas conforme necessário
+                                                        // Inclua mais configurações conforme necessário, por exemplo:
+                                                        // .configure(routes::task_routes::config) // Se você tiver rotas para tarefas
+                                                        // Inicialização e configuração de serviços podem ser feitas aqui
+                                                        // Por exemplo, passar o pool de conexões do banco de dados para os handlers
     })
     .bind(&config.server_address)? // Utiliza o endereço do servidor definido na configuração
     .run()
