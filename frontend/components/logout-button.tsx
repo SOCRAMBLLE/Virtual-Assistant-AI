@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { useEffect } from "react";
 
 const LogoutBtn = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   // useEffect(() => {
   //   const accessToken = localStorage.getItem("accessToken");
