@@ -6,19 +6,19 @@ import { useEffect } from "react";
 const LogoutBtn = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      router.push("/");
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   const accessToken = localStorage.getItem("accessToken");
+  //   if (!accessToken) {
+  //     router.push("/");
+  //   }
+  // }, [router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    router.push("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("accessToken");
+  //   router.push("/");
+  // };
 
-  return <Button onClick={handleLogout}>Logout</Button>;
+  return <Button>Logout</Button>;
 };
 
 export default LogoutBtn;
