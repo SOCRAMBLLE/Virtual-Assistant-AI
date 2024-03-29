@@ -6,7 +6,7 @@
   margin: 2rem auto;
   width: 90%;
   max-width: 800px;
-  height: 91svh;
+  height: 80svh;
   gap: 1rem;
   border-radius: 1rem;
 }
@@ -103,7 +103,7 @@
   color: rgb(84, 138, 138);
 }
 
-.chat-messages-container .message-container .message-subcontainer{
+.chat-messages-container .message-container .message-subcontainer {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
